@@ -1,1 +1,1 @@
-Workflow.cwl 01_download_file.cwl 02_trim_fastq.cwl 03_align_fastq.cwl 04_sort_bam.cwl 05_mark_dups_bam.cwl 06_calculate_bqsr_bam.cwl 07_apply_bqsr_bam.cwl 08_call_small_variants.cwl 09_call_structural_variants.cwl
+python3 index.py Workflow.cwl 01_download_file.cwl 02_trim_fastq.cwl 03_align_fastq.cwl 04_sort_bam.cwl 05_mark_dups_bam.cwl 06_calculate_bqsr_table.cwl 07_apply_bqsr_bam.cwl 08_call_small_variants.cwl 09_call_structural_variants.cwl
