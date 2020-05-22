@@ -13,7 +13,7 @@ In summary, there are four main sections of a CWL workflow: metadata, inputs, ou
 
 
 # Using WorkflowCombo
-To begin using WorkflowCombo, there are a few steps to be taken (refer to [this website](https://www.digitalcitizen.life/command-prompt-how-use-basic-commands) for a refresher on how to use the command line) . Firsly, this command line tool has a few dependencies in order to run smoothy. They are 
+To begin using WorkflowCombo, there are a few steps to be taken (refer to [this website](https://www.digitalcitizen.life/command-prompt-how-use-basic-commands) if you need a refresher on how to use the command line) . Firsly, this command line tool has a few dependencies in order to run smoothy. They are 
 * [cutie](https://pypi.org/project/cutie/)  (for providing options on the command line)
 * [sys](https://docs.python.org/3/library/sys.html)  (for getting arguments and ending the program early)
 * [os](https://www.geeksforgeeks.org/os-module-python-examples/)  (read existing cwl files. This should be downloaded by default)
