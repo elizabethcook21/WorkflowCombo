@@ -30,5 +30,4 @@ Once the packages are installed, you can run Workflow Combo by following these s
 4. **Double-check the Workflow you Created** Once you've finished following all the prompts of the command line tool, your workflow will have been created!! The file will have been created in the same folder with the rest of your cwl files and index.py. Open up the file and make sure it looks good. If you try running the workflow and it doesn't work, you can tweak the file until it works. Every workflow is different and will require different tweaks.
 
 *Authors: Elizabeth C. Anderson and Dr. Stephen Piccolo (BYU)*
-
 *May 2020*
