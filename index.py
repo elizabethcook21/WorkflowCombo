@@ -8,8 +8,6 @@ import yaml  # read existing cwl files
 import inquirer  # ask questions on the command line
 
 
-# TODO post this to Github
-# TODO add functionality for strings and numbers
 def main():
     workflowName = sys.argv[1]
     listOfNames = sys.argv[2:]
@@ -18,8 +16,6 @@ def main():
         inquirer.Text('label', message="Please provide some information about the workflow you are creating")
     ]
     answers = inquirer.prompt(questions)
-    # answers = inquirer.prompt(questions) #JUST COMMENT OUT FOR DEBUGGING PURPOSES!
-    #answers = {'label': 'ub'}
 
     # Initialize the tool we want to build
     cwl_tool = cwlgen.Workflow(workflow_id=os.path.splitext(workflowName)[0],
@@ -50,16 +46,17 @@ def main():
     # Parse the inputs of the first file to save as Workflow inputs
     workflowInputs = []
     for item in CLT_Inputs[listOfNames[0]]:
-        if CLT_Inputs[listOfNames[0]][item].get('type').lower() == 'file':
-            input_Info = cwlgen.workflow.InputParameter(param_id=item.get('id'),
-                                                        label=item.get('label'),
-                                                        doc=item.get('doc'),
-                                                        param_type=item.get('type'))
-            cwl_tool.inputs.append(input_Info)
-            workflowInputs.append(input_Info)
-            step_inputs = cwlgen.WorkflowStepInput(input_id=item.get('id'),
-                                                   source=item.get('id'))
-            step.inputs.append(step_inputs)
+        input_Info = cwlgen.workflow.InputParameter(param_id=item,
+                                                    label=CLT_Inputs[listOfNames[0]][item].get('label'),
+                                                    doc=CLT_Inputs[listOfNames[0]][item].get('doc'),
+                                                    param_type=CLT_Inputs[listOfNames[0]][item].get('type'))
+        cwl_tool.inputs.append(input_Info)
+        idToShow = {'ID': item, 'Label': CLT_Inputs[listOfNames[0]][item].get('label'),
+                    'Type': CLT_Inputs[listOfNames[0]][item].get('type')}
+        workflowInputs.append(idToShow)
+        step_inputs = cwlgen.WorkflowStepInput(input_id=item,
+                                               source=item)
+        step.inputs.append(step_inputs)
 
     # Get outputs of first step and append it to the whole workflow
     for y in CLT_Outputs[listOfNames[0]]:
@@ -73,10 +70,9 @@ def main():
         prevStepOutputs = CLT_Outputs[listOfNames[i]]
         importantOutputs = []
         for j in prevStepOutputs:
-            if prevStepOutputs[j]['type'] == 'File' or prevStepOutputs[j]['type'] == 'Directory':
-                idToAdd = {'id': j}
-                idToAdd.update(prevStepOutputs[j])
-                importantOutputs.append(idToAdd)
+            idToAdd = {'id': j}
+            idToAdd.update(prevStepOutputs[j])
+            importantOutputs.append(idToAdd)
 
         # Get inputs from the "i+1" step that are of type Directory or File
         nextInputs = []
@@ -86,11 +82,12 @@ def main():
             step = cwlgen.workflow.WorkflowStep(step_id=os.path.splitext(listOfNames[i + 1])[0],
                                                 run=listOfNames[i + 1])
         except:
-            # TODO make final outputs here
-            # This is where we will assign the outputs of the last step as the final outputs of the workflow and end
-            print("Out of bounds")
-
-        # Declare this step
+            for x in importantOutputs:
+                output = cwlgen.workflow.WorkflowOutputParameter(param_id=x.get('id'),
+                                                                 doc=x.get('doc'),
+                                                                 param_type=x.get('doc'),
+                                                                 output_source=os.path.splitext(listOfNames[i])[0])
+                cwl_tool.outputs.append(output)
 
         for k in nextInputs:
             if nextInputs[k]['type'] == 'File' or nextInputs[k]['type'] == 'Directory':
@@ -177,6 +174,8 @@ def main():
         cwl_tool.export()
 
     cwl_tool.export(workflowName)
+    #TODO The one logic I didn't work into this command line tool is that sometimes there is a step output that is also 
+    # considered a "final state" output, but that isn't reflected in the output section of the workflow yet
 
 
 if __name__ == '__main__':
