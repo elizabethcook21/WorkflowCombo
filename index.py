@@ -183,6 +183,7 @@ def main():
     cwl_tool.export(workflowName)
     # TODO The one logic I didn't work into this command line tool is that sometimes there is a step output that is also
     #  considered a "final state" output, but that isn't reflected in the output section of the workflow yet
+    # TODO I don't feel totally secure with the string/int handling of this tool. I'd like to do more debugging here
 
 
 if __name__ == '__main__':
