@@ -178,7 +178,6 @@ def main():
         except:
             pass
         cwl_tool.steps.append(step)
-        cwl_tool.export()
 
     cwl_tool.export(workflowName)
     # TODO The one logic I didn't work into this command line tool is that sometimes there is a step output that is also
