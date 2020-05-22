@@ -1,4 +1,9 @@
 #! /usr/bin/env python3
+# Debugging tips: I liked working with this tool in PyCharm because there's a built-in terminal. However, debugging 
+# with the pyCharm debugger didn't work with the inquirer and cutie packages because those are meant for the 
+# command line. I've read that if you go to Run-> Edit Configurations and under "Execution" check the box for "Emulate
+# Terminal in Output Console" you can debug it like it's on the commmand line. This was such a small tool, I didn't 
+# need to do heavy debugging, so I didn't ever use that option. If more features are added, that might be helpful.
 
 import cutie  # for providing options on the command line
 import sys  # for getting arguments and ending the program early
@@ -12,6 +17,7 @@ def main():
     workflowName = sys.argv[1]
     listOfNames = sys.argv[2:]
 
+    # Get information about workflow from the user
     questions = [
         inquirer.Text('label', message="Please provide some information about the workflow you are creating")
     ]
@@ -39,7 +45,7 @@ def main():
             except AttributeError:
                 pass
 
-    # Declare first step
+    # Declare first step of our Workflow (cwl_tool)
     step = cwlgen.workflow.WorkflowStep(step_id=os.path.splitext(listOfNames[0])[0],
                                         run=listOfNames[0])
 
@@ -82,6 +88,7 @@ def main():
             step = cwlgen.workflow.WorkflowStep(step_id=os.path.splitext(listOfNames[i + 1])[0],
                                                 run=listOfNames[i + 1])
         except:
+            # This is at the end, when the last outputs are workflow outputs, designate them as such
             for x in importantOutputs:
                 output = cwlgen.workflow.WorkflowOutputParameter(param_id=x.get('id'),
                                                                  doc=x.get('doc'),
@@ -171,10 +178,11 @@ def main():
         except:
             pass
         cwl_tool.steps.append(step)
+        cwl_tool.export()
 
     cwl_tool.export(workflowName)
-    #TODO The one logic I didn't work into this command line tool is that sometimes there is a step output that is also 
-    # considered a "final state" output, but that isn't reflected in the output section of the workflow yet
+    # TODO The one logic I didn't work into this command line tool is that sometimes there is a step output that is also
+    #  considered a "final state" output, but that isn't reflected in the output section of the workflow yet
 
 
 if __name__ == '__main__':
