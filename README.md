@@ -14,12 +14,12 @@ In summary, there are four main sections of a CWL workflow: metadata, inputs, ou
 
 # Using WorkflowCombo
 To begin using WorkflowCombo, there are a few steps to be taken. Firsly, this command line tool has a few dependencies in order to run smoothy. They are 
-* cutie  (for providing options on the command line)
-* sys  (for getting arguments and ending the program early)
-* os  (read existing cwl files)
-* cwlgen  (easily build new workflow)
-* yaml  (read existing cwl files)
-* inquirer  (ask questions on the command line)
+* [cutie](https://pypi.org/project/cutie/)  (for providing options on the command line)
+* [sys](https://docs.python.org/3/library/sys.html)  (for getting arguments and ending the program early)
+* [os](https://www.geeksforgeeks.org/os-module-python-examples/)  (read existing cwl files. This should be downloaded by default)
+* [cwlgen](https://github.com/common-workflow-language/python-cwlgen)  (easily build new workflow)
+* [yaml](http://zetcode.com/python/yaml/)  (read existing cwl files)
+* [inquirer](https://pypi.org/project/inquirer/)  (ask questions on the command line)
 
 You may have to install these packages using `<pip install *package name*>` (to run this, you will have to install pip) before you can use WorkflowCombo. Additionally, if you don't have python installed on your computer, you will need to install that as well. For help in installing pip or python packages, refer to [this](https://packaging.python.org/tutorials/installing-packages/) website. To download python3, follow the directions on the downloads page of the [Python website](https://www.python.org/downloads/).
 
